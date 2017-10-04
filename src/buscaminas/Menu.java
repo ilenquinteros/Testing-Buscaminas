@@ -5,10 +5,8 @@
  */
 package buscaminas;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +19,7 @@ import javax.swing.*;
  */
 public class Menu extends JFrame {
 
+    private String fuente = "Tahoma";
     private JRadioButton aleatorio = new JRadioButton("ALEATORIO");
     private JRadioButton personal = new JRadioButton("PERSONALIZADO");
     private JLabel bombas = new JLabel("Bombas: ");
@@ -49,7 +48,7 @@ public class Menu extends JFrame {
         aleatorio.setBounds(new Rectangle(85, 40, 150, 40));
         aleatorio.setMnemonic(KeyEvent.VK_B);
         aleatorio.setActionCommand("aleatorio");
-        aleatorio.setFont(new Font("Tahoma", 0, 20));
+        aleatorio.setFont(new Font(fuente, 0, 20));
         aleatorio.setSelected(true);
         aleatorio.addActionListener(
                 new ActionListener() {
@@ -66,7 +65,7 @@ public class Menu extends JFrame {
         personal.setBounds(new Rectangle(85, 90, 190, 40));
         personal.setMnemonic(KeyEvent.VK_B);
         personal.setActionCommand("aleatorio");
-        personal.setFont(new Font("Tahoma", 0, 20));
+        personal.setFont(new Font(fuente, 0, 20));
         personal.setSelected(false);
         personal.addActionListener(
                 new ActionListener() {
@@ -81,13 +80,13 @@ public class Menu extends JFrame {
         this.add(personal);
 
         bombas.setBounds(new Rectangle(85, 150, 190, 40));
-        bombas.setFont(new Font("Tahoma", 0, 15));
+        bombas.setFont(new Font(fuente, 0, 15));
         bombas.setEnabled(false);
 
         this.add(bombas);
 
         cantidadBombas.setBounds(new Rectangle(160, 150, 85, 40));
-        cantidadBombas.setFont(new Font("Tahoma", 0, 15));
+        cantidadBombas.setFont(new Font(fuente, 0, 15));
         cantidadBombas.setEnabled(false);
         this.add(cantidadBombas);
 
@@ -97,7 +96,7 @@ public class Menu extends JFrame {
         this.add(mapas);
 
         jugar.setBounds(new Rectangle(45, 270, 240, 50));
-        jugar.setFont(new Font("Tahoma", 0, 25));
+        jugar.setFont(new Font(fuente, 0, 25));
         jugar.addActionListener(
                 new ActionListener() {
             public void actionPerformed(ActionEvent ar) {
@@ -111,18 +110,17 @@ public class Menu extends JFrame {
         }
         );
         this.add(jugar);
-        this.setVisible(true);
     }
 
     public boolean hayLetra() {
         boolean hayLetra = false;
-        String bombas = cantidadBombas.getText();
-        System.out.println(bombas.isEmpty());
-        if (!bombas.isEmpty()) {
-            for (int i = 0; i < bombas.length(); i++) {
-                if (Character.isLetter(bombas.charAt(i))) {
+        String numeroBombas = cantidadBombas.getText();
+        System.out.println(numeroBombas.isEmpty());
+        if (!numeroBombas.isEmpty()) {
+            for (int i = 0; i < numeroBombas.length(); i++) {
+                if (Character.isLetter(numeroBombas.charAt(i))) {
                     hayLetra = true;
-                    i = bombas.length();
+                    i = numeroBombas.length();
                 }
             }
         }else{
@@ -133,26 +131,34 @@ public class Menu extends JFrame {
 
     public void aleatorio() {
         int numero = (int) (Math.random() * 3) + 1;
-        int bombas = 1;
+        int numeroBombas = 1;
         BuscaMinas Juego;
         switch (numero) {
             case 1:
-                bombas = (int) (Math.random() * 25) + 1;
-                JOptionPane.showMessageDialog(this, "Mapa Pequeño(8x8), "+bombas+" bombas");
-                Juego = new BuscaMinas(10, 10, 236, bombas);
+                numeroBombas = (int) (Math.random() * 25) + 1;
+                JOptionPane.showMessageDialog(this, "Mapa Pequeño(8x8), "+numeroBombas+" bombas");
+                Juego = new BuscaMinas(10, 10, 236, numeroBombas);
+                this.setVisible(false);
+                Juego.setVisible(true);
                 break;
             case 2:
-                bombas = (int) (Math.random() * 50) + 1;
-                JOptionPane.showMessageDialog(this, "Mapa Mediano(12x12), "+bombas+" bombas");
-                Juego = new BuscaMinas(14, 14, 326, bombas);
+                numeroBombas = (int) (Math.random() * 50) + 1;
+                JOptionPane.showMessageDialog(this, "Mapa Mediano(12x12), "+numeroBombas+" bombas");
+                Juego = new BuscaMinas(14, 14, 326, numeroBombas);
+                this.setVisible(false);
+                Juego.setVisible(true);
                 break;
             case 3:
-                bombas = (int) (Math.random() * 150) + 1;
-                JOptionPane.showMessageDialog(this, "Mapa Grande(20x20), "+bombas+" bombas");
-                Juego = new BuscaMinas(22, 22, 506, bombas);
+                numeroBombas = (int) (Math.random() * 150) + 1;
+                JOptionPane.showMessageDialog(this, "Mapa Grande(20x20), "+numeroBombas+" bombas");
+                Juego = new BuscaMinas(22, 22, 506, numeroBombas);
+                this.setVisible(false);
+                Juego.setVisible(true);
                 break;
+            default:
+                JOptionPane.showMessageDialog(this, "Error al cargar el mapa");
         }
-        this.setVisible(false);
+        
     }
 
     public void personalizado() {
@@ -168,6 +174,7 @@ public class Menu extends JFrame {
                     if (b <= 25) {
                         Juego = new BuscaMinas(10, 10, 236, b);
                         this.setVisible(false);
+                        Juego.setVisible(true);
                     } else {
                         JOptionPane.showMessageDialog(null, "La cantidad de bombas maxima para este mapa es 25");
                     }
@@ -176,6 +183,7 @@ public class Menu extends JFrame {
                     if (b <= 50) {
                         Juego = new BuscaMinas(14, 14, 326, b);
                         this.setVisible(false);
+                        Juego.setVisible(true);
                     } else {
                         JOptionPane.showMessageDialog(null, "La cantidad de bombas maxima para este mapa es 50");
                     }
@@ -184,6 +192,7 @@ public class Menu extends JFrame {
                     if (b <= 150) {
                         Juego = new BuscaMinas(22, 22, 506, b);
                         this.setVisible(false);
+                        Juego.setVisible(true);
                     } else {
                         JOptionPane.showMessageDialog(null, "La cantidad de bombas maxima para este mapa es 150");
                     }
@@ -195,5 +204,6 @@ public class Menu extends JFrame {
     public static void main(String[] args) {
 
         Menu MenuBuscaMinas = new Menu();
+        MenuBuscaMinas.setVisible(true);
     }
 }

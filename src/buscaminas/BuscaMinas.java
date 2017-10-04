@@ -21,7 +21,7 @@ public class BuscaMinas extends JFrame {
     private int alto = 32;
     private int bound = 10;
     private int cantidadBombas = 1;
-    public JButton Botones[][] = new JButton[ancho][alto];
+    public JButton[][] Botones = new JButton[ancho][alto];
     public String[][] elArray = new String[ancho][alto];
     private long startTime;
     private long endTime;
@@ -61,7 +61,7 @@ public class BuscaMinas extends JFrame {
         this.getContentPane().add(jButton1, null);
         this.getContentPane().add(jPanel1, null);
         cargarTablero();
-        colocarBomba(getAncho());
+        colocarBomba();
         comprueba();
 
         this.setVisible(true);
@@ -131,7 +131,7 @@ public class BuscaMinas extends JFrame {
     }
     //—- Coloca el numero de bombas dependiendo el ancho.
 
-    public void colocarBomba(int numeroBombas) {
+    public void colocarBomba() {
         double i = 0;
         double z = 0;
         int condicion = 1;
